@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>Levels</title>
+        <meta charset="utf-8" />
+        <script src="https://cdn.jsdelivr.net/gh/chickencuber/jsquery@latest/jsquery.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/p5@2.0.5/lib/p5.js"></script>
+        <script src="https://chickencuber.github.io/chickens-elements/chickens-elements.js"></script>
+    </head>
+    <body>
+        <main>
+            <dialog id="modal" >
+                <ce-select id="tile-textures"></ce-select>
+                <button id="ok">OK</button>
+            </dialog>
+            <dialog id="entity-modal">
+                <label for="struct-name">name</label>
+                <input id="struct-name">
+                <br>
+                <ce-select id="entity-textures"></ce-select>
+                <br>
+                <label for="has-pos">has pos</label>
+                <input type="checkbox" id="has-pos">
+                <br>
+                <label for="entity-layer">layer</label>
+                <select id="entity-layer">
+                    <option value="player">player</option>
+                    <option value="entity">entity</option>
+                    <option value="ui">UI</option>
+                    <option value="bg">Background</option>
+                </select>
+                <br>
+                <label for "entity-fields">fields</label>
+                <div id="entity-fields"></div>
+                <button id="add-field">+</button>
+                <br>
+                <button id="entity-ok">OK</button>
+            </dialog>
+            <button id="open">open directory</button>
+            <a href="../index.html"><button>Go To Texture Editor</button></a>
+            <div id="editor">
+                <button id="save">save</button>
+                <button id="add">add</button>
+                <button id="rename">rename</button>
+                <button id="copy">copy</button>
+                <button id="delete">delete</button>
+                <select id="levels-select"></select>
+                <label for="debug">debug</label>
+                <input type="checkbox" id="debug">
+                <div id="right">
+                    <ce-color-picker id="picker" value="#0000ffff" block-alpha></ce-color-picker>
+                    <select id="editor-select">
+                        <option value="tile">tiles</option>
+                        <option value="entity">entity</option>
+                    </select>
+                    <label for="onion">onion</label> 
+                    <input type="checkbox" id="onion"/>
+                    <div id="tile-presets-">
+                        <select id="layer-select-tile">
+                            <option value="layer1">Background</option>
+                            <option value="layer2" selected>Active</option>
+                            <option value="layer3">Foreground</option>
+                        </select>
+                        <button id="add-tile">+</button>
+                        <div id="tile-presets">
+                        </div>
+                    </div>
+                    <div id="entity-presets-">
+                        <div id="fields">
+                        </div>
+                        <button id="add-entity">+</button>
+                        <div id="entity-presets">
+                        </div>
+                        <div id="fields-editor">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script src="main.js"></script>
+    </body>
+</html>
+
+
