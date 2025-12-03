@@ -57,6 +57,13 @@ $("#fliph").click(() => {
     const s = $("#texture").value();
     json[s].reverse();
 })
+$("#fliph").click(() => {
+    if($("#texture").value() == "" || !json[$("#texture").value()]) return;
+    const s = $("#texture").value();
+    for(const g of json[s]) {
+        g.reverse();
+    }
+})
 $("#save").click(async () => {
     const file = await handle.getFileHandle("textures.proj", {create: true})
     const f = await file.createWritable();
