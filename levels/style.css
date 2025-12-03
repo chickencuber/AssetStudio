@@ -11,6 +11,7 @@ html, body {
 #tile-presets- {
     width: 250px;
     height: 500px;
+    overflow-y: scroll;
 }
 #add-entity {
     width: 100%;
@@ -19,6 +20,7 @@ html, body {
     display:none;
     width: 250px;
     height: 500px;
+    overflow-y: scroll;
 }
 canvas {
     display: block;
