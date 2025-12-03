@@ -67,7 +67,7 @@ function level_to_ron(level) {
                 case "number": {
                     fields+=`${k}: ${v}` 
                 }
-                case "checkbox": {
+                case "bool": {
                     fields+=`${k}: ${v}` 
                 }
                     break;
@@ -153,7 +153,7 @@ $("#add-field").click(() => {
         $.create("select").class("type").child([
             $.create("option").value("text").text("text"),
             $.create("option").value("number").text("number"),
-            $.create("option").value("checkbox").text("bool"),
+            $.create("option").value("bool").text("bool"),
         ]),
         $.create("input").class("field-default").css({
             placeholder: "default"
