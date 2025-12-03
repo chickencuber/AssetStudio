@@ -67,7 +67,7 @@ function level_to_ron(level) {
                 case "number": {
                     fields+=`${k}: ${v}` 
                 }
-                case "bool": {
+                case "checkbox": {
                     fields+=`${k}: ${v}` 
                 }
                     break;
@@ -153,7 +153,7 @@ $("#add-field").click(() => {
         $.create("select").class("type").child([
             $.create("option").value("text").text("text"),
             $.create("option").value("number").text("number"),
-            $.create("option").value("bool").text("bool"),
+            $.create("option").value("checkbox").text("bool"),
         ]),
         $.create("input").class("field-default").css({
             placeholder: "default"
@@ -593,7 +593,8 @@ function draw() {
                     const fields = {};
                     for(const f of $("#fields").children) {
                         const id = f.value();
-                        fields[id] = f.$(".value").value();
+                        const v = f.$(".value").getProp("type") === "checkbox"? f.$(".value").checked(): f.$(".value").value()
+                        fields[id] = v;
                     }
                     level.entities.push({
                         id: $(".selected").value(),
@@ -616,7 +617,7 @@ function draw() {
                                     $("#fields-editor").child($.create("div").value(k).child([
                                         $.create("label").text(k + ": "),
                                         $.create("input").props({type: v.type}).class("value").value(selected.fields[k]).on("change", (v) => {
-                                            selected.fields[k] = v.target.value;
+                                            selected.fields[k] = v.type === "checkbox"?v.target.checked: v.target.value;
                                         }),
                                     ])) 
                                 }
