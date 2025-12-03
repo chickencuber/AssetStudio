@@ -57,15 +57,13 @@ $("#fliph").click(() => {
     const s = $("#texture").value();
     json[s].reverse();
 })
-$("#fliph").click(() => {
+$("#flipv").click(() => {
     if($("#texture").value() == "" || !json[$("#texture").value()]) return;
     const s = $("#texture").value();
     for(const g of json[s]) {
         g.reverse();
     }
 })
-
-
 $("#rotate").click(() => {
     if($("#texture").value() == "" || !json[$("#texture").value()]) return;
     const s = $("#texture").value();
