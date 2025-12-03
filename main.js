@@ -64,6 +64,19 @@ $("#fliph").click(() => {
         g.reverse();
     }
 })
+
+
+$("#rotate").click(() => {
+    if($("#texture").value() == "" || !json[$("#texture").value()]) return;
+    const s = $("#texture").value();
+    const m = json[s];
+    const mc = structuredClone(m);
+    for(let x = 0; x < 16; x++) {
+        for(let y = 0; y < 16; y++) {
+            m[x][y] = mc[15-y][x];
+        } 
+    }
+})
 $("#save").click(async () => {
     const file = await handle.getFileHandle("textures.proj", {create: true})
     const f = await file.createWritable();
