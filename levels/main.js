@@ -616,7 +616,7 @@ function draw() {
                                 for(const [k, v] of Object.entries(preset.fields)) {
                                     $("#fields-editor").child($.create("div").value(k).child([
                                         $.create("label").text(k + ": "),
-                                        $.create("input").props({type: v.type}).class("value").value(selected.fields[k]).on("change", (v) => {
+                                        $.create("input").props({type: v.type}).class("value").checked(selected.fields[k]).value(selected.fields[k]).on("change", (v) => {
                                             selected.fields[k] = v.type === "checkbox"?v.target.checked: v.target.value;
                                         }),
                                     ])) 
