@@ -67,6 +67,7 @@ function level_to_ron(level) {
                 case "number": {
                     fields+=`${k}: ${v}` 
                 }
+                    break;
                 case "checkbox": {
                     fields+=`${k}: ${v}` 
                 }
