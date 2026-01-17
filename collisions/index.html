@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>Collisions</title>
+        <meta charset="utf-8" />
+        <script src="https://cdn.jsdelivr.net/gh/chickencuber/jsquery@latest/jsquery.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/p5@2.0.5/lib/p5.js"></script>
+        <script src="https://chickencuber.github.io/chickens-elements/chickens-elements.js"></script>
+    </head>
+    <body>
+        <main>
+            <dialog id="select">
+                <ce-select id="textures"></ce-select>
+                <button id="ok">OK</button>
+            </dialog>
+            <button id="open">open directory</button>
+            <a href="../levels/index.html"><button>Go To Level Editor</button></a>
+            <a href="../index.html"><button>Go To Texture Editor</button></a>
+            <div id="editor">
+                <button id="save">save</button>
+                <button id="add">add</button>
+                <button id="delete">delete</button>
+                <select id="texture"></select>
+
+                <table id="grid">
+                    <tr>
+                        <td></td>
+                        <td><input type="checkbox" id="up"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="left"></td>
+                        <td></td>
+                        <td><input type="checkbox" id="right"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="checkbox" id="down"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+        <script src="main.js"></script>
+    </body>
+</html>
+

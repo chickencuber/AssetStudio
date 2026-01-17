@@ -182,10 +182,9 @@ function draw() {
     stroke(0);
     rect(x*w, y*h, w, h);
     if(mouseIsPressed) {
-        try {
+        if(x < 16 && x >= 0 &&  y < 16 && y >=0) {
             json[s][x][y] = mouseButton.left? $("#picker").value(): "#00000000";
-        } catch(e) {
-            console.log(e)
+        
         }
     }
 }
