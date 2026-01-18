@@ -287,12 +287,12 @@ $("#add-tile").click(async () => {
 })
 
 $("#save").click(async () => {
-    const file = await handle.getFileHandle("levels.proj")
+    const file = await handle.getFileHandle("levels.proj", {create: true})
     const f = await file.createWritable();
     await f.write(JSON.stringify(levels));
     await f.close();
     {
-        const file = await handle.getFileHandle("levels.ron")
+        const file = await handle.getFileHandle("levels.ron", {create: true})
         const f = await file.createWritable();
         await f.write(to_ron());
         await f.close();
