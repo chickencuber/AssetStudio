@@ -71,12 +71,15 @@ function level_to_ron(level) {
                 case "checkbox": {
                     fields+=`${k}: ${v}` 
                 }
+                    break;
                 case "enum": {
                     fields+=`${k}: ${v}`
                 }
                     break;
             }
+            fields+=","
         }
+        fields = fields.slice(0, -1);
 
         const l = {
             player: "Player",
