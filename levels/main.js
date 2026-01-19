@@ -71,6 +71,9 @@ function level_to_ron(level) {
                 case "checkbox": {
                     fields+=`${k}: ${v}` 
                 }
+                case "enum": {
+                    fields+=`${k}: ${v}`
+                }
                     break;
             }
         }
@@ -103,8 +106,8 @@ document.addEventListener("contextmenu", (e) => {
     e.preventDefault();
 });
 /**
-    * @import * from "p5/global"
-    */
+ * @import * from "p5/global"
+ */
 
 //width and height of each tile
 const w = 600/14;
@@ -115,9 +118,9 @@ const pw = w/16;
 const ph = h/16;
 
 /**
-    * @type{FileSystemDirectoryHandle}
-    */
-    let handle; 
+ * @type{FileSystemDirectoryHandle}
+ */
+let handle; 
 
 let done;
 $("#open").click(async () => {
@@ -148,6 +151,30 @@ function get_entity() {
     })
 }
 
+function get_type(t) {
+    switch(t) {
+        case "enum":
+            const values = $.create("input").props({
+                placeholder: "values(separate by |)"
+            }).class("enum")
+            const _default = $.create("select").class("field-default");
+            values.on("change", () => {
+                _default.html("");
+                _default.child(values.value().split("|").map(v => $.create("option").value(v).text(v)));
+            })
+            return [
+                values,
+                _default,
+            ];
+        default:
+            return $.create("input").class("field-default").props({
+                type: t,
+                placeholder: "default"
+            })
+
+    }
+}
+
 $("#add-field").click(() => {
     const v = $.create("div").child([
         $.create("input").props({type: "text"}).class("key"),
@@ -155,16 +182,25 @@ $("#add-field").click(() => {
             $.create("option").value("text").text("text"),
             $.create("option").value("number").text("number"),
             $.create("option").value("checkbox").text("bool"),
+
+            $.create("option").value("enum").text("enum"),
         ]),
-        $.create("input").class("field-default").css({
-            placeholder: "default"
-        }),
+        $.create("div").class("field-options"),
         $.create("button").text("x").css({
             background: "red"
         }).click(() => {
             v.remove(); 
-        })
+        }),
+        $.create("hr"),
     ])
+    const t = v.$(".type");
+    const a = v.$(".field-options");
+    a.html(" ");
+    a.child(get_type(t.value()))
+    t.on("change", () => {
+        a.html(" ");
+        a.child(get_type(t.value()))
+    })
     $("#entity-fields").child(v)
 })
 
@@ -180,9 +216,13 @@ $("#add-entity").click(async () => {
     const value = $("#entity-textures").value();
     const fields = {};
     for(const c of $("#entity-fields").children) {
+        let t = c.$(".type").value();
         fields[c.$(".key").value()] = {
-            type: c.$(".type").value(),
+            type: t,
             default: c.$(".field-default").value(),
+        }
+        if(t === "enum") {
+            fields[c.$(".key").value()].values = c.$(".enum").value().split("|");
         }
     }
     const obj = {
@@ -248,11 +288,18 @@ function select_tile(v) {
             for(const [k, v] of Object.entries(preset.fields)) {
                 $("#fields").child($.create("div").value(k).child([
                     $.create("label").text(k + ": "),
-                    $.create("input").props({type: v.type}).class("value").value(v.default),
+                    create_input(v),
                 ])) 
             }
         }
     }
+}
+
+function create_input(v) {
+    if(v.type === "enum") {
+        return $.create("select").child(v.values.map(v => $.create("option").value(v).text(v))).class("value").value(v.default);
+    }
+    return $.create("input").props({type: v.type}).class("value").value(v.default)
 }
 
 $("#add-tile").click(async () => {
@@ -617,7 +664,7 @@ function draw() {
                                 for(const [k, v] of Object.entries(preset.fields)) {
                                     $("#fields-editor").child($.create("div").value(k).child([
                                         $.create("label").text(k + ": "),
-                                        $.create("input").props({type: v.type}).class("value").checked(selected.fields[k]).value(selected.fields[k]).on("change", (v) => {
+                                        create_input_editor(k, v).on("change", (v) => {
                                             selected.fields[k] = v.target.type === "checkbox"?v.target.checked: v.target.value;
                                         }),
                                     ])) 
@@ -633,3 +680,10 @@ function draw() {
     }
 }
 
+
+function create_input_editor(k, v) {
+    if(v.type === "enum") {
+        return $.create("select").child(v.values.map(v=>$.create("option").value(v).text(v))).class("value").value(selected.fields[k]);
+    }
+    return $.create("input").props({type: v.type}).class("value").checked(selected.fields[k]).value(selected.fields[k]);
+}
