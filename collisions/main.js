@@ -56,7 +56,7 @@ $("#delete").click(() => {
 })
 
 function to_ron(m) {
-    return `Metadata(collisions: [${m.collision.map(v=>`[${v.toString()}]`).toString()}], top: ${m.up}, bottom: ${m.down}, left: ${m.left}, right: ${m.right})`
+    return `Metadata(collisions: [${m.collision.map(v=>`[${v.toString()}]`).toString()}], top: ${m.up}, bottom: ${m.down}, left: ${m.left}, right: ${m.right}, trigger: ${m.trigger})`
 }
 
 $("#save").click(async () => {
@@ -93,10 +93,14 @@ $("#add").click(async () => {
         down: true,
         left: true,
         right: true,
+        trigger: false,
     } 
     $("#texture").child($.create("option").value(k).text(k))
     $("#texture").value(k);
     $("#up").checked(meta[$("#texture").value()].up) 
+
+    $("#trigger").checked(meta[$("#texture").value()].trigger) 
+
     $("#down").checked(meta[$("#texture").value()].down) 
     $("#left").checked(meta[$("#texture").value()].left) 
     $("#right").checked(meta[$("#texture").value()].right) 
@@ -105,6 +109,9 @@ $("#add").click(async () => {
 $("#texture").on("change", () => {
     if(!meta[$("#texture").value()]) return;
     $("#up").checked(meta[$("#texture").value()].up) 
+
+    $("#trigger").checked(meta[$("#texture").value()].trigger) 
+
     $("#down").checked(meta[$("#texture").value()].down) 
     $("#left").checked(meta[$("#texture").value()].left) 
     $("#right").checked(meta[$("#texture").value()].right) 
@@ -172,6 +179,9 @@ async function setup() {
                 $.create("option").value(k).text(k)
             )
             $("#up").checked(meta[$("#texture").value()].up) 
+
+            $("#trigger").checked(meta[$("#texture").value()].trigger) 
+
             $("#down").checked(meta[$("#texture").value()].down) 
             $("#left").checked(meta[$("#texture").value()].left) 
             $("#right").checked(meta[$("#texture").value()].right) 
@@ -186,6 +196,13 @@ $("#up").on("change", () => {
     if($("#texture").value() == "") return;
     meta[$("#texture").value()].up = $("#up").checked();
 })
+
+
+$("#trigger").on("change", () => {
+    if($("#texture").value() == "") return;
+    meta[$("#texture").value()].trigger= $("#trigger").checked();
+})
+
 $("#down").on("change", () => {
     if($("#texture").value() == "") return;
     meta[$("#texture").value()].down = $("#down").checked();
